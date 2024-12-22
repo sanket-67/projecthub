@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Project Hub and Admin Panel</title>
+ <style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0;
+  }
+  
+  .container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin: 20px;
+  }
+
+  .box {
+    background-color: white;
+    border: 1px solid #ccc;
+    padding: 20px;
+    margin: 10px;
+    flex-basis: 30%;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+
+  h2, h3 {
+    margin-top: 0;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+
+  input, textarea, button {
+    margin: 5px 0;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+
+  button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+
+  button:hover {
+    background-color: #45a049;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  table, th, td {
+    border: 1px solid #ccc;
+  }
+
+  th, td {
+    padding: 10px;
+    text-align: left;
+  }
+
+  .flex-column {
+    display: flex;
+    flex-direction: column;
+  }
+
+  #preview {
+    display: none; /* Hide preview initially */
+    max-width: 100%; /* Set max width for the preview */
+    margin-top: 10px; /* Add some space above the preview */
+  }
+</style>
+</head>
+<body>
+
+  <div class="container">
+    <!-- Register Form -->
+    <div class="box">
+      <h2>Register Form</h2>
+      <form id="registerForm">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="username">username</label>
+        <input type="text" id="cmail" name="username" required>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+
+        <label for="fullname">Full Name:</label>
+        <input type="text" id="fullname" name="fullname" required>
+
+        <label for="skill">Skill:</label>
+        <input type="text" id="skill" name="skill">
+
+        <label for="useridcard">Upload ID:</label>
+        <input type="file" id="useridcard" name="useridcard" accept="image/*" required>
+        <img id="preview" alt="Image Preview" />
+
+        <button type="submit">Register</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const uploadInput = document.getElementById('useridcard');
+    const previewImage = document.getElementById('preview');
+    const registerForm = document.getElementById('registerForm');
+
+    // File preview logic
+    uploadInput.addEventListener('change', function() {
+      const file = this.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          previewImage.src = e.target.result;
+          previewImage.style.display = 'block';
+        }
+        reader.readAsDataURL(file);
+      } else {
+        previewImage.style.display = 'none';
+      }
+    });
+
+    // Form submission logic
+    registerForm.addEventListener('submit', async function(event) {
+      event.preventDefault(); // Prevent the default form submission
+
+      const formData = new FormData(this); // Create a FormData object
+
+      try {
+        const response = await fetch('http://localhost:3000/users/register', {
+          method: 'POST',
+          body: formData,
+        });
+
+        const result = await response.json();
+        if (response.ok) {
+          alert(result.message); // Success message
+        } else {
+          throw new Error(result.message); // Handle errors
+        }
+      } catch (error) {
+        alert(`Error: ${error.message}`);
+      }
+    });
+  </script>
+</body>
+</html>
