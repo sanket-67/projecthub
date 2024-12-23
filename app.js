@@ -9,12 +9,11 @@ const app = express();
 
 const allowedOrigins = [
     'https://projecthub1.vercel.app', 
-    'http://localhost:3000'          
+    'http://localhost:5173'         
   ];
   
   app.use(cors({
-    origin: allowedOrigins, 
-    credentials: true       
+    origin: allowedOrigins    
   }));
 dotenv.config();
 mongoCon()
