@@ -1,26 +1,20 @@
 import dotenv from 'dotenv';
-import mongoose from 'mongoose'
-dotenv.config()
-const mongoCon= async() =>{
+import mongoose from 'mongoose';
 
-try {
+// Load environment variables
+dotenv.config();
 
-await mongoose.connect(process.env.MURL,{
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-});
+const mongoCon = async () => {
+  try {
+    // Connect to MongoDB
+    await mongoose.connect(process.env.MURL, {
+      useNewUrlParser: true, // Ensures URL parsing is supported
+      useUnifiedTopology: true, // Enables the new connection management engine
+    });
+    console.log("The database connected successfully");
+  } catch (error) {
+    console.error("There is a problem connecting to MongoDB!!!!!", error.message);
+  }
+};
 
-console.log("The database Conneted Sucessfully");
-
-
-
-
-    
-} catch (error) {
-
-console.log("There is problem to connnect the mongodb!!!!!",error);
-    
-}
-
-}
-export {mongoCon}
+export { mongoCon };
