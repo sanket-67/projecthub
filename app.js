@@ -18,13 +18,14 @@ const allowedOrigins = [
 // CORS middleware configuration
 app.use(cors({
   origin: allowedOrigins,  // Allow these origins
-  credentials: true ,       // Allow credentials (cookies, authorization headers)
+  credentials: true       // Allow credentials (cookies, authorization headers)
 }));
 
 dotenv.config();
 mongoCon();
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }))
 app.use(cookieParser());
 app.use('/users', userrouter);
 app.use('/project', projectroute);
