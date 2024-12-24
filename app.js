@@ -9,17 +9,21 @@ import { projectroute } from './routes/Projectroute.js';
 const app = express();
 
 // Updated CORS configuration
-const allowedOrigins = [
-  'https://projecthub1.vercel.app', // Add any other allowed origins here
-  'http://localhost:3000',          // Your React app running locally on port 3000
-  'http://localhost:5173'           // The correct port for your frontend
-];
 
-// CORS middleware configuration
+
 app.use(cors({
-  origin: allowedOrigins,  // Allow these origins
-  credentials: true       // Allow credentials (cookies, authorization headers)
+    origin: ['https://projecthub1.vercel.app', 'http://localhost:5173'],
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    exposedHeaders: ['set-cookie']
 }));
+
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Credentials', 'true');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+    next();
+});
 
 dotenv.config();
 mongoCon();
