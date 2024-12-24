@@ -18,7 +18,7 @@ const allowedOrigins = [
 // CORS middleware configuration
 app.use(cors({
   origin: allowedOrigins,  // Allow these origins
-  credentials: true        // Allow credentials (cookies, authorization headers)
+  credentials: true ,       // Allow credentials (cookies, authorization headers)
 }));
 
 dotenv.config();
