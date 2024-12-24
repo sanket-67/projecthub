@@ -105,9 +105,8 @@ if (!Correctpassword) {
 const userloggedin = await User.findById(user._id).select("-password -refreshtoken")
 
 const options={
-httpOnly: true,
-        secure: true, // for HTTPS
-        sameSite: 'strict',
+      httpOnly: true,
+     
 
 }
 res.status(200).cookie("refreshtoken",refreshtoken,options)
