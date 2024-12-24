@@ -186,8 +186,9 @@ const newuser = await User.findByIdAndUpdate({_id :user._id},{
 })
 
 const options = {
-    httpOnly :true,
-    Secure : true
+   httpOnly: true,
+        secure: true, // for HTTPS
+        sameSite: 'strict',
 }
 res.status(200)
 .clearCookie("accesstoken",options)
