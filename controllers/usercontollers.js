@@ -107,6 +107,7 @@ const userloggedin = await User.findById(user._id).select("-password -refreshtok
 const options={
 
     httpOnly : true,
+    Secure : true
    
 
 }
@@ -186,7 +187,8 @@ const newuser = await User.findByIdAndUpdate({_id :user._id},{
 })
 
 const options = {
-    httpOnly :true
+    httpOnly :true,
+    Secure : true
 }
 res.status(200)
 .clearCookie("accesstoken",options)
