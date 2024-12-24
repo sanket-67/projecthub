@@ -106,10 +106,7 @@ const userloggedin = await User.findById(user._id).select("-password -refreshtok
 
 const options={
       httpOnly: true,
-    secure: true, // Use true if using HTTPS
-domain: '.onrender.com'
-     
-
+ 
 }
 res.status(200).cookie("refreshtoken",refreshtoken,options)
 .cookie("accesstoken",accesstoken,options)
