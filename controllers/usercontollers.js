@@ -106,6 +106,7 @@ const userloggedin = await User.findById(user._id).select("-password -refreshtok
 
 const options={
       httpOnly: true,
+    secure:true
      
 
 }
