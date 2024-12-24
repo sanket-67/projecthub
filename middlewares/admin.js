@@ -6,8 +6,9 @@ import jwt from "jsonwebtoken"
 
 const Adminverify = asyncHandler(async (req,res,next)=>{
 console.log(req.cookies);
-
-const token = req.cookies.accesstoken || req.header("Authorization")?.replace("Bearer ", "") 
+    console.log("Headers received:", req.headers)
+    
+const token = req.cookies?.accesstoken || req.header("Authorization")?.replace("Bearer ", "") 
 
 console.log(token);
 if (!token) {
@@ -22,7 +23,6 @@ if (decoded.userRole !=="admin") {
 }
 
 console.log("admin is verified");
-
 
 next()
 
