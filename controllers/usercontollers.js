@@ -63,9 +63,7 @@ const loginUser = asyncHandler(async (req, res) => {
         throw new ApiError(400, "All fields are required")
     }
 
-    const user = await User.findOne({
-       identifier
-    })
+    const user = await User.findOne({ identifier })
 
     if (!user) {
         throw new ApiError(404, "User not found. Please register first")
