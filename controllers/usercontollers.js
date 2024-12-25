@@ -85,12 +85,10 @@ const loginUser = asyncHandler(async (req, res) => {
 
     // Production-grade cookie options
     const cookieOptions = {
-        httpOnly: true,
-        secure: true, // Required for production HTTPS
-        sameSite: 'none', // Required for cross-origin cookies
-        domain: '.vercel.app', // Match your domain
-        path: '/',
-        maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
+ httpOnly: true,
+  secure: true,
+  sameSite: 'none',
+  path: '/',
     }
 
     res
