@@ -89,6 +89,7 @@ const loginUser = asyncHandler(async (req, res) => {
   secure: true,
   sameSite: 'none',
   path: '/',
+        maxAge : 3600000,
     }
 
     res
