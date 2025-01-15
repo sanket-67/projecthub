@@ -1,6 +1,6 @@
 import e from "express";
 
-import {registerUser,loginUser,getpendingusers,grantUser,bannedUser,logout} from '../controllers/usercontollers.js'
+import {registerUser,loginUser,getpendingusers,grantUser,bannedUser,logout,gettoken} from '../controllers/usercontollers.js'
 import { upload } from "../middlewares/multer.js";
 import {Adminverify} from '../middlewares/admin.js'
 import {verifyJWT} from '../middlewares/VerifyJWT.js'
