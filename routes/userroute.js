@@ -17,5 +17,6 @@ router.route("/pendingreq").get(Adminverify,getpendingusers)
 router.route("/grantuser").post(Adminverify,grantUser)
 router.route("/bannedUser").post(Adminverify,bannedUser)
 router.route("/logout").post(verifyJWT,logout)
+router.route("/gettoken").get(verifyJWT, gettoken);
 
 export default router
