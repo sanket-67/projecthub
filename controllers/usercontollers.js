@@ -222,6 +222,27 @@ const changepassword = asyncHandler(async (req, res) => {
     res.status(200).json(new ApiResponse(200, "Password changed successfully"))
 })
 
+
+const gettoken = asyncHandler(async (req,res)=>{
+const info= req.user;
+
+if(!info){
+   throw  new ApiError(404,"user not found in refreshtoken")
+}
+
+const newuser = await User.findById({_id:info._id})
+
+const  {accesstoken}=genrateAcessTokenandRefreshToken();
+
+res.status(200).json(
+new ApiResponse(200,{
+    accesstoken
+})
+
+)
+})
+
+
 export {
     registerUser,
     loginUser,
@@ -229,5 +250,6 @@ export {
     grantUser,
     bannedUser,
     logout,
-    changepassword
+    changepassword,
+gettoken
 }
