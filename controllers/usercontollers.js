@@ -88,7 +88,7 @@ const loginUser = asyncHandler(async (req, res) => {
  httpOnly: true,
   secure: true,
   sameSite: 'none',
-  path: '/',
+  doamin: '.vercel.app',
         maxAge : 3600000,
     }
 
