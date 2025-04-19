@@ -224,42 +224,51 @@ const changepassword = asyncHandler(async (req, res) => {
 
 
 const gettoken = asyncHandler(async (req,res)=>{
-const info= req.user;
+try {
+  const info = req.user;
 
-if(!info){
-   throw  new ApiError(404,"user not found in refreshtoken")
+  if(!info){
+     throw new ApiError(401, "Authentication required");
+  }
+
+  const newuser = await User.findById({_id:info._id});
+  
+  if (!newuser) {
+     throw new ApiError(404, "User account not found");
+  }
+
+  // Generate a new access token
+  const accesstoken = await newuser.genrateAccessToken();
+
+  // Set the access token in a cookie
+  const cookieOptions = {
+     httpOnly: true,
+     secure: true,
+     sameSite: 'none',
+     domain: '.vercel.app',
+     maxAge: 3600000, // 1 hour
+  };
+
+  res.status(200)
+     .cookie("accesstoken", accesstoken, cookieOptions)
+     .json(
+        new ApiResponse(200, "Token refreshed successfully", {
+           user: {
+              _id: newuser._id,
+              username: newuser.username,
+              email: newuser.email,
+              fullname: newuser.fullname,
+              userRole: newuser.userRole,
+              isAllowed: newuser.isAllowed
+           },
+           accesstoken
+        })
+     );
+} catch (error) {
+  console.error("Token refresh error:", error);
+  throw new ApiError(401, "Authentication failed. Please login again.");
 }
-
-const newuser = await User.findById({_id:info._id})
-
-// Generate a new access token
-const accesstoken = await newuser.genrateAccessToken()
-
-// Set the access token in a cookie
-const cookieOptions = {
-   httpOnly: true,
-   secure: true,
-   sameSite: 'none',
-   domain: '.vercel.app',
-   maxAge: 3600000, // 1 hour
-}
-
-res.status(200)
-   .cookie("accesstoken", accesstoken, cookieOptions)
-   .json(
-      new ApiResponse(200, "Token refreshed successfully", {
-         user: {
-            _id: newuser._id,
-            username: newuser.username,
-            email: newuser.email,
-            fullname: newuser.fullname,
-            userRole: newuser.userRole,
-            isAllowed: newuser.isAllowed
-         },
-         accesstoken
-      })
-   )
-})
+});
 
 
 export {
